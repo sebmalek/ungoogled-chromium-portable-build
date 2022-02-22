@@ -1,0 +1,22 @@
+#FROM ubuntu:impish
+FROM debian:bullseye
+
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections && export DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get -y update --fix-missing && apt-get -y upgrade && apt-get -y install apt-utils 
+
+RUN apt-get -y install wget software-properties-common gnupg2
+
+RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
+#RUN add-apt-repository "deb http://apt.llvm.org/impish llvm-toolchain-impish main"
+RUN add-apt-repository "deb http://apt.llvm.org/bullseye llvm-toolchain-bullseye main"
+RUN apt-get update
+RUN apt-get install -y libllvm-15-ocaml-dev libllvm15 llvm-15 llvm-15-dev llvm-15-doc llvm-15-examples llvm-15-runtime clang-15 clang-tools-15 clang-15-doc libclang-common-15-dev libclang-15-dev libclang1-15 clang-format-15 clangd-15 libfuzzer-15-dev lldb-15 lld-15 libc++-15-dev libc++abi-15-dev libomp-15-dev libclc-15-dev libunwind-15-dev lld 
+RUN ln -s /usr/lib/llvm-15/lib/clang/15.0.0/share /usr/lib/clang/15.0.0/share
+
+
+RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-15 800\
+ && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-15 800\
+ && update-alternatives --install /usr/bin/llvm-ar llvm-ar /usr/bin/llvm-ar-15 800\
+ && update-alternatives --install /usr/bin/llvm-nm llvm-nm /usr/bin/llvm-nm-15 800
+
