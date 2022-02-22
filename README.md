@@ -1,4 +1,4 @@
-# <img src="logo.png" width="30">  ungoogled-chromium-portable build 
+# ungoogled-chromium-portable build 
 
 Repo to provide ungoogled-chromium-portable builds to the ungoogled-chromium-binaries site.
 The build is an adapted version of the docker build in ungoogled-chromium-portablelinux since I had problems with the clang and linker packages there.
